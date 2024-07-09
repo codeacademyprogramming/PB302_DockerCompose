@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  mvcapp:
+    image: eaghacode/pb302mvc:code1
+    ports:
+      - "80:8080"
+    networks:
+      - app_bridge
+  webapp-ms-sql:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Admin@123"
+      MSSQL_PID: Express
+    volumes:
+      - sqlcoursedata:/var/opt/data
+    ports:
+      - "2433:1433"
+    networks:
+      - app_bridge
+volumes:
+  sqlcoursedata:
+networks:
+  app_bridge:
+    driver: bridge
+
